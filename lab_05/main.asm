@@ -1,6 +1,7 @@
 EXTRN println: near
 EXTRN getNumber: near
 EXTRN printGotNum: near
+EXTRN toUnsignedHex: near
 
 
 StkSeg SEGMENT PARA STACK 'STACK'
@@ -17,7 +18,7 @@ DataS SEGMENT PARA PUBLIC 'DATA'
                    DB 'Your choice: '
                    DB '$'
                 
-    functionsArray DW getNumber, printGotNum, die
+    functionsArray DW getNumber, toUnsignedHex, printGotNum, die
 DataS ENDS
 
 Code SEGMENT WORD PUBLIC 'CODE'
