@@ -1,23 +1,23 @@
 EXTRN println: near
 EXTRN getNumber: near
+EXTRN printGotNum: near
+
 
 StkSeg SEGMENT PARA STACK 'STACK'
     DB 200h DUP (?)
 StkSeg ENDS
 
-DataS SEGMENT PARA 'DATA'
+DataS SEGMENT PARA PUBLIC 'DATA'
     menuMessage    DB 'Choose the paragraph of menu:', 0Ah, 0Dh
                    DB '1. Put the number', 0Ah, 0Dh
                    DB '2. Make the number to unsigned in hex and print', 0Ah, 0Dh
                    DB '3. Make the number to signed in decimal and print', 0Ah, 0Dh
-                   DB '4. Print current number', 0Ah, 0Dh
+                   DB '4. Print got number', 0Ah, 0Dh
                    DB '5. Exit', 0Ah, 0Dh
                    DB 'Your choice: '
                    DB '$'
-                   
-    currentNumber  DB 16 DUP (30h)
                 
-    functionsArray DW getNumber, die
+    functionsArray DW getNumber, printGotNum, die
 DataS ENDS
 
 Code SEGMENT WORD PUBLIC 'CODE'
@@ -43,7 +43,6 @@ menu:
     call println
     call println
     call functionsArray[BX]
-    call println
     call println
     call println
     jmp menu

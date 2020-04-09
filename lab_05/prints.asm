@@ -1,6 +1,9 @@
 PUBLIC println
+PUBLIC printGotNum
 
-DataS SEGMENT WORD 'DATA'
+EXTRN currentNumber: near
+
+DataS SEGMENT WORD PUBLIC 'DATA'
 DataS ENDS
 
 Code SEGMENT WORD PUBLIC 'CODE'
@@ -14,5 +17,13 @@ println proc near
     int 21h
     ret
 println endp
+
+printGotNum proc near
+    call println
+    mov DX, OFFSET currentNumber
+    mov AH, 09
+    int 21h
+    ret
+printGotNum endp
 Code ENDS
 END

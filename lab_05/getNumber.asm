@@ -1,7 +1,9 @@
 PUBLIC getNumber
 
-DataS SEGMENT WORD 'DATA'
-    currentNum DB 16 DUP(30)
+PUBLIC currentNumber
+
+DataS SEGMENT PARA  PUBLIC 'DATA'
+    currentNumber  DB 17 DUP ('$')
 DataS ENDS
 
 Code SEGMENT WORD PUBLIC 'CODE'
@@ -16,7 +18,7 @@ forLoop:
     jz endFor
     mov AH, 0
     mov BX, CX
-    mov currentNum[BX], AL
+    mov currentNumber[BX], AL
     inc CX
     cmp CX, 16
     jnz forLoop
