@@ -117,7 +117,7 @@ forTrans:
     add DL, '0'
     cmp DL, '9'
     jg toLetter
-goBack:
+back:
     mov BX, CX
     mov hexNum[BX], DL
     
@@ -129,9 +129,9 @@ endForTrans:
     int 21h
     ret
     
- toLetter:
-    add DL, 17
-    jmp goBack
+toLetter:
+    add DL, 7
+    jmp back
     
 toUnsignedHex endp
 Code ENDS
