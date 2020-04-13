@@ -9,7 +9,7 @@ DataS SEGMENT PARA PUBLIC 'DATA'
     numSize  DW 1
     copySize DB 1
 
-    ;hexNum DB 4 DUP ($)
+    hexNum DB 5 DUP ('$')
     mem  DW 1
     bmem DB 1
     cur  DW 1
@@ -38,6 +38,7 @@ endHex:
     div BL
     
     cmp AH, 0
+    mov mem, 0
     jz endFor
     mov bmem, AH
     mov BL, 4
@@ -75,7 +76,62 @@ makeTetradeCopy endp
     
 toUnsignedHex proc near
     call makeTetradeCopy
+    mov CX, 0
+forTrans:
+    mov AX, CX
+    mov bmem, 4
+    mul bmem
+    mov bmem, AL
+    mov BX, 0
+    mov BL, bmem
+    cmp numCopy[BX], '$'
+    je endForTrans
+    mov DL, 0
+    mov AL, numCopy[BX]
+    sub AL, '0'
+    mov bmem, 8
+    mul bmem
+    mov bmem, AL
+    add DL, bmem
+    inc BX
+    mov AL, numCopy[BX]
+    sub AL, '0'
+    mov bmem, 4
+    mul bmem
+    mov bmem, AL
+    add DL, bmem
+    inc BX
+    mov AL, numCopy[BX]
+    sub AL, '0'
+    mov bmem, 2
+    mul bmem
+    mov bmem, AL
+    add DL, bmem
+    inc BX
+    mov AL, numCopy[BX]
+    sub AL, '0'
+    mov bmem, 1
+    mul bmem
+    mov bmem, AL
+    add DL, bmem
+    add DL, '0'
+    cmp DL, '9'
+    jg toLetter
+goBack:
+    mov BX, CX
+    mov hexNum[BX], DL
+    
+    inc CX
+    JMP forTrans
+endForTrans:
+    mov DX, offset hexNum
+    mov AH, 09h
+    int 21h
     ret
+    
+ toLetter:
+    add DL, 17
+    jmp goBack
     
 toUnsignedHex endp
 Code ENDS
