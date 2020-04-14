@@ -17,7 +17,7 @@ DataS SEGMENT WORD PUBLIC 'DATA'
 
     hexNum DB 5 DUP ('$')
     decimalNum DB '+' 
-         DB 5 DUP ('$')
+         DB 6 DUP ('$')
     startEnd DW 0
     mem  DW 1
     bmem DB 1
@@ -226,7 +226,6 @@ forStack:
     call printDecNum
     
     ret
-        
 toSignedDec endp
 
 Code ENDS
