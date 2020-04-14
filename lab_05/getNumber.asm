@@ -23,6 +23,9 @@ forLoop:
     cmp CX, 16
     jnz forLoop
 endFor:
+    mov AL, '$'
+    mov BX, CX
+    mov currentNumber[BX], AL
     ret
 getNumber endp
 Code ENDS

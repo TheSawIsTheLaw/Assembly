@@ -2,8 +2,12 @@ PUBLIC toUnsignedHex
 PUBLIC toSignedDec
 
 PUBLIC numCopy
+PUBLIC hexNum
+PUBLIC decimalNum
 
 EXTRN currentNumber: near
+EXTRN printDecNum: near
+EXTRN printHexNum: near
 
 DataS SEGMENT WORD PUBLIC 'DATA'
     numCopy  DB 17 DUP ('$')
@@ -129,9 +133,7 @@ back:
     inc CX
     JMP forTrans
 endForTrans:
-    mov DX, offset hexNum
-    mov AH, 09h
-    int 21h
+    call printHexNum
     ret
     
 toLetter:
@@ -140,11 +142,10 @@ toLetter:
     
 toUnsignedHex endp
 
-toSignedDec proc near
+getHexSum proc near
     mov CX, 0
 forDec:
     mov BX, CX
-    mov DX, 0
     mov DX, currentNumber[BX]
     inc CX
     cmp DH, '$'
@@ -165,9 +166,9 @@ backSet:
 forToSum:
     mov AX, degree
     mov DX, currentNumber[BX]
-    sub DX, '0'
+    sub DL, '0'
+    mov DH, 0
     mul DX
-    mov AH, 0
     add mem, AX
     mov AX, 2
     mul degree
@@ -176,24 +177,56 @@ forToSum:
     cmp BX, startEnd
     jge forToSum
     
-    mov AH, 02h
-    add mem, 48
-    mov DX, mem
-    int 21h
-    
     ret
     
 setSign:
-    mov DX, currentNumber
-    cmp DX, '1'
+    mov DX, 0
+    mov DX, currentNumber[0]
     mov startEnd, 1
+    cmp DH, 1
     je setMinus
     jmp backSet
     
 setMinus:
     mov decimalNum[0], '-'
     jmp backSet
+getHexSum endp
+
+toSignedDec proc near
+    call getHexSum
     
+    mov CX, 1
+    mov BX, 10
+    mov AX, mem
+    cmp AX, 4
+    jle endDecTrans
+forDecTrans:
+    mov AX, mem
+    mov DX, 0
+    div BX
+    push DX
+    mov mem, AX
+    inc CX
+    cmp AX, 10
+    jge forDecTrans
+endDecTrans:
+    push AX
+    
+    mov mem, CX
+    mov CX, 1
+forStack:
+    pop DX
+    mov BX, CX
+    add DL, '0'
+    mov decimalNum[BX], DL
+    inc CX
+    cmp CX, mem
+    jle forStack
+    
+    call printDecNum
+    
+    ret
+        
 toSignedDec endp
 
 Code ENDS
