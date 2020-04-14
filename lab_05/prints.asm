@@ -8,6 +8,7 @@ EXTRN numCopy: near
 
 EXTRN hexNum: near
 EXTRN decimalNum: near
+EXTRN curSign: near
 
 DataS SEGMENT WORD PUBLIC 'DATA'
 DataS ENDS
@@ -27,8 +28,11 @@ println endp
 printGotNum proc near
     call println
     mov AH, 09
+    mov DX, OFFSET curSign
+    int 21h
     mov DX, OFFSET currentNumber
     int 21h
+    
     ret
 printGotNum endp
 

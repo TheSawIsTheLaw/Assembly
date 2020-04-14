@@ -1,8 +1,11 @@
 PUBLIC getNumber
 
 PUBLIC currentNumber
+PUBLIC curSign
 
 DataS SEGMENT PARA  PUBLIC 'DATA'
+    curSign DB '+'
+            DB '$'
     currentNumber  DB 17 DUP ('$')
 DataS ENDS
 
@@ -10,6 +13,9 @@ Code SEGMENT WORD PUBLIC 'CODE'
     ASSUME CS:Code, DS:DataS
     
 getNumber proc near
+    mov AH, 1
+    int 21h
+    mov curSign, AL
     mov CX, 0
 forLoop:
     mov AH, 1

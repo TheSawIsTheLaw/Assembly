@@ -6,6 +6,7 @@ PUBLIC hexNum
 PUBLIC decimalNum
 
 EXTRN currentNumber: near
+EXTRN curSign: near
 EXTRN printDecNum: near
 EXTRN printHexNum: near
 
@@ -154,9 +155,6 @@ forDec:
     jnz forDec
 endForDec:    
     mov numSize, CX
-    cmp CX, 16
-    je setSign
-backSet:
     mov BX, numSize
     mov degree, 1
     mov mem, 0
@@ -178,18 +176,6 @@ forToSum:
     jge forToSum
     
     ret
-    
-setSign:
-    mov DX, 0
-    mov DX, currentNumber[0]
-    mov startEnd, 1
-    cmp DH, 1
-    je setMinus
-    jmp backSet
-    
-setMinus:
-    mov decimalNum[0], '-'
-    jmp backSet
 getHexSum endp
 
 toSignedDec proc near
@@ -223,9 +209,22 @@ forStack:
     cmp CX, mem
     jle forStack
     
+    mov AX, 0
+    mov AH, '-'
+    mov BX, curSign[0]
+    mov BH, 0
+    cmp BX, AX
+    jne changeSignDec
+changeBack:
+    
     call printDecNum
+    mov decimalNum, '+'
     
     ret
+    
+changeSignDec:
+    mov decimalNum, '-'
+    jmp changeBack
 toSignedDec endp
 
 Code ENDS
