@@ -1,15 +1,20 @@
 PUBLIC toUnsignedHex
+PUBLIC toSignedDec
 
 PUBLIC numCopy
 
 EXTRN currentNumber: near
 
-DataS SEGMENT PARA PUBLIC 'DATA'
+DataS SEGMENT WORD PUBLIC 'DATA'
     numCopy  DB 17 DUP ('$')
     numSize  DW 1
     copySize DB 1
+    degree   DW 1
 
     hexNum DB 5 DUP ('$')
+    decimalNum DB '+' 
+         DB 5 DUP ('$')
+    startEnd DW 0
     mem  DW 1
     bmem DB 1
     cur  DW 1
@@ -134,6 +139,63 @@ toLetter:
     jmp back
     
 toUnsignedHex endp
+
+toSignedDec proc near
+    mov CX, 0
+forDec:
+    mov BX, CX
+    mov DX, 0
+    mov DX, currentNumber[BX]
+    inc CX
+    cmp DH, '$'
+    je endForDec
+    cmp CX, 16
+    jnz forDec
+endForDec:    
+    mov numSize, CX
+    cmp CX, 16
+    je setSign
+backSet:
+    mov BX, numSize
+    mov degree, 1
+    mov mem, 0
+    
+    dec BX
+    
+forToSum:
+    mov AX, degree
+    mov DX, currentNumber[BX]
+    sub DX, '0'
+    mul DX
+    mov AH, 0
+    add mem, AX
+    mov AX, 2
+    mul degree
+    mov degree, AX
+    dec BX
+    cmp BX, startEnd
+    jge forToSum
+    
+    mov AH, 02h
+    add mem, 48
+    mov DX, mem
+    int 21h
+    
+    ret
+    
+setSign:
+    mov DX, currentNumber
+    cmp DX, '1'
+    mov startEnd, 1
+    je setMinus
+    jmp backSet
+    
+setMinus:
+    mov decimalNum[0], '-'
+    jmp backSet
+    
+toSignedDec endp
+
 Code ENDS
 END
 

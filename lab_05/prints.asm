@@ -22,7 +22,7 @@ println endp
 printGotNum proc near
     call println
     mov AH, 09
-    mov DX, OFFSET numCopy
+    mov DX, OFFSET currentNumber
     int 21h
     ret
 printGotNum endp
