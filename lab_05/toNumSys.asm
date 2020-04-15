@@ -95,12 +95,59 @@ makeTetradeCopy endp
 
 complementeAdd proc near
     mov BX, 0
-    mov AX, curSign[BX]
-    cmp AL, '+'
-    jz endComplement
+    mov AX, CurSign[BX]
+    mov AH, 0
+    cmp AX, '-'
+    jnz compEnd
     
-endComplement:
+    mov CX, 0
+forCompleted:
+    mov BX, CX
+    mov DH, numCopy[BX]
+    inc CX
+    cmp DH, '$'
+    je endForComp
+    cmp DH, '1'
+    jz decDec
+    jnz incDec
+backDecInc:
+    mov numCopy[BX], DH
+    jmp forCompleted
+    
+endForComp:
+    mov CX, 16
+forSum:
+    dec CX
+    mov BX, CX
+    mov DH, numCopy[BX]
+    cmp DH, '1'
+    jz decDecC
+    jnz incDecC
+backdecincDecC:
+    mov numCopy[BX], DH
+    cmp CX, 0
+    jz endForSum
+    cmp DH, '0'
+    jz forSum
+endForSum:
+compEnd:
     ret
+    
+decDec:
+    dec DH
+    jmp backDecInc
+ 
+incDec:
+    inc DH
+    jmp backDecInc
+    
+decDecC:
+    dec DH
+    jmp backdecincDecC
+ 
+incDecC:
+    inc DH
+    jmp backdecincDecC
 complementeAdd endp
     
 toUnsignedHex proc near
