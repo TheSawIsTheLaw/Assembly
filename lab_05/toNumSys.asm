@@ -254,7 +254,7 @@ toSignedDec proc near
     cmp AX, 65535
     je forDecTrans
     cmp AX, 9
-    jge endDecTrans
+    jle endDecTrans
 forDecTrans:
     mov AX, mem
     mov DX, 0
