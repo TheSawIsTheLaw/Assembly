@@ -54,14 +54,15 @@ endHex:
     mov copySize, 0
     add copySize, BL
     
-    cmp AH, 3
-    jz noMainZeroes
     
     mov BL, 12
     mov bmem, 4
     mul bmem
     sub BL, AL
     add copySize, BL
+    
+    cmp copySize, 0
+    je endFor
     
 noMainZeroes:
     mov BX, 0
@@ -203,6 +204,8 @@ toSignedDec proc near
     mov CX, 1
     mov BX, 10
     mov AX, mem
+    cmp AX, 65535
+    je forDecTrans
     cmp AX, 9
     jle endDecTrans
 forDecTrans:
