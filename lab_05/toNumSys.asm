@@ -47,15 +47,23 @@ endHex:
     
     div BL
     
-    cmp AH, 0
     mov mem, 0
-    jz endFor
     mov bmem, AH
     mov BL, 4
     sub BL, bmem
-    
     mov copySize, 0
     add copySize, BL
+    
+    cmp AH, 3
+    jz noMainZeroes
+    
+    mov BL, 12
+    mov bmem, 4
+    mul bmem
+    sub BL, AL
+    add copySize, BL
+    
+noMainZeroes:
     mov BX, 0
     mov BL, copySize
     mov mem, BX
@@ -83,9 +91,20 @@ forIn:
 endForIn:
     ret
 makeTetradeCopy endp
+
+complementeAdd proc near
+    mov BX, 0
+    mov AX, curSign[BX]
+    cmp AL, '+'
+    jz endComplement
+    
+endComplement:
+    ret
+complementeAdd endp
     
 toUnsignedHex proc near
     call makeTetradeCopy
+    call complementeAdd
     mov CX, 0
 forTrans:
     mov AX, CX
@@ -210,20 +229,23 @@ forStack:
     jle forStack
     
     mov AX, 0
-    mov AH, '-'
-    mov BX, curSign[0]
+    mov AL, '+'
+    mov BX, 0
+    mov BX, curSign[BX]
     mov BH, 0
     cmp BX, AX
     jne changeSignDec
 changeBack:
     
     call printDecNum
-    mov decimalNum, '+'
+    mov BX, 0
+    mov decimalNum[BX], '+'
     
     ret
     
 changeSignDec:
-    mov decimalNum, '-'
+    mov BX, 0
+    mov decimalNum[BX], '-'
     jmp changeBack
 toSignedDec endp
 
