@@ -81,7 +81,7 @@ endFor:
 forIn:
     mov BX, CX
     mov DX, currentNumber[BX]
-    cmp currentNumber[BX], '$'
+    cmp DL, '$'
     je endForIn
     mov cur, DX
     mov BX, mem
