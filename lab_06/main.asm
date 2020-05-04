@@ -9,6 +9,7 @@ start:
     tempH DD ?
     installation DW 666
     tempReg DB ?
+    tempBReg DW ?
     
 resident proc near
     push AX
@@ -73,21 +74,36 @@ printData:
     mov AH, 31
     stosw
     
-
-    
     jmp return
     
 printYear:
     mov AH, 2Ah
     int 21h
 
+    mov DX, 0
     mov AX, CX
-    mov DL, 10
-    div DL
-    mov AL, AH
+    mov CX, 10
+    div CX
+    mov tempBReg, AX
+    mov AL, DL
     add AL, '0'
-    mov AH, 31
+    mov tempReg, AH
+    mov AH, 30
+    add DI, 6
     stosw
+    mov AH, tempReg
+    sub DI, 4
+    
+    mov AX, tempBReg
+    div CX
+    mov tempBReg, AX
+    mov AL, DL
+    add AL, '0'
+    mov tempReg, AH
+    mov AH, 30
+    stosw
+    mov AH, tempReg
+    sub DI, 4
     
 return:
     pop DS
