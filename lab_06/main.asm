@@ -8,6 +8,7 @@ start:
     jmp initialization
     tempH DD ?
     installation DW 666
+    tempReg DB ?
     
 resident proc near
     push AX
@@ -43,17 +44,36 @@ printData:
     mov AL, DL
     mov DL, 10
     div DL
-    mov DL, AL
-    add DL, '0'
-    mov AL, DL
+    add AL, '0'
+    mov tempReg, AH
+    mov AH, 31
+    stosw
+    mov AH, tempReg
+    
+    mov AL, AH
+    add AL, '0'
     mov AH, 31
     stosw
     
-    mov DL, AH
-    add DL, '0'
-    mov AL, DL
+    mov AL, '.'
+    stosw
+    
+    mov AX, 0
+    mov AL, DH
+    mov DL, 10
+    div DL
+    add AL, '0'
+    mov tempReg, AH
     mov AH, 31
     stosw
+    mov AH, tempReg
+    
+    mov AL, AH
+    add AL, '0'
+    mov AH, 31
+    stosw
+    
+
     
     jmp return
     
