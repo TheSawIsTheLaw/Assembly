@@ -19,7 +19,13 @@ resident proc near
     push DS
     pushf
     
-    call CS:tempH ; black magic?
+    call CS:tempH
+    
+    mov ah, 1
+    int 16h
+    
+    cmp al, 'a'
+    jne return
     
     mov AX, 0B800h
     mov ES, AX
@@ -38,8 +44,7 @@ resident proc near
     div DL
     mov DL, AL
     add DL, '0'
-    mov AH, 02h
-    int 21h
+    stosw
     
     mov DL, AH
     add DL, '0'
@@ -71,7 +76,7 @@ return:
 resident endp
     
 initialization:
-    mov AL, 5Eh
+    mov AL, 09h
     mov AH, 35h
     int 21h
     
@@ -81,7 +86,7 @@ initialization:
     mov word ptr tempH, BX
     mov word ptr tempH + 2, ES
     
-    mov AL, 5Eh ; Мб убрать или безопасность?
+    mov AL, 09h
     mov DX, offset resident
     mov AH, 25h
     int 21h
@@ -99,7 +104,7 @@ uninstallation:
     
     mov dx, word ptr ES:tempH
     mov DS, word ptr ES: tempH + 2
-    mov AL, 5Eh
+    mov AL, 09h
     mov AH, 25h
     int 21h
     
