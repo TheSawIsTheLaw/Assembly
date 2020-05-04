@@ -87,11 +87,9 @@ printYear:
     mov tempBReg, AX
     mov AL, DL
     add AL, '0'
-    mov tempReg, AH
-    mov AH, 30
+    mov AH, 81h
     add DI, 6
     stosw
-    mov AH, tempReg
     sub DI, 4
     
     mov AX, tempBReg
@@ -99,11 +97,23 @@ printYear:
     mov tempBReg, AX
     mov AL, DL
     add AL, '0'
-    mov tempReg, AH
-    mov AH, 30
+    mov AH, 81h
     stosw
-    mov AH, tempReg
     sub DI, 4
+    
+    mov AX, tempBReg
+    div CL
+    mov tempReg, AL
+    mov AL, AH
+    add AL, '0'
+    mov AH, 81h
+    stosw
+    sub DI, 4
+    
+    mov AL, tempReg
+    add AL, '0'
+    mov AH, 81h
+    stosw
     
 return:
     pop DS
