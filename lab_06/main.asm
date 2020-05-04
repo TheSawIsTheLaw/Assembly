@@ -8,7 +8,6 @@ start:
     jmp initialization
     tempH DD ?
     installation DW 666
-    curState DB '1'
     
 resident proc near
     push AX
@@ -21,22 +20,24 @@ resident proc near
     
     call CS:tempH
     
-    mov ah, 1
-    int 16h
-    
-    cmp al, 'a'
-    jne return
-    
     mov AX, 0B800h
     mov ES, AX
     mov DI, 300
     
+    mov ah, 1
+    int 16h
+    
+    cmp al, 'z'
+    je printData
+    
+    cmp al, 'x'
+    je printYear
+    
+    jmp return
+    
+printData:
     mov AH, 2Ah
     int 21h
-    
-    cmp curState, '1'
-    jnz printDayWeek
-    inc curState
     
     mov AX, 0
     mov AL, DL
@@ -44,28 +45,32 @@ resident proc near
     div DL
     mov DL, AL
     add DL, '0'
+    mov AL, DL
+    mov AH, 31
     stosw
     
     mov DL, AH
     add DL, '0'
+    mov AL, DL
+    mov AH, 31
     stosw
     
     jmp return
     
-printDayWeek:
-    dec curState
-    
+printYear:
+    mov AH, 2Ah
+    int 21h
+
+    mov AX, CX
     mov DL, 10
     div DL
+    mov AL, AH
     add AL, '0'
-    stosw
-    mov DL, AH
-    mov AL, DL
-    add AL, '0'
+    mov AH, 31
     stosw
     
 return:
-    pop DX
+    pop DS
     pop ES
     pop CX
     pop DX
