@@ -90,7 +90,9 @@ printYear:
     mov AH, 81h
     add DI, 6
     stosw
-    sub DI, 4
+    mov AL, ' '
+    stosw
+    sub DI, 6
     
     mov AX, tempBReg
     div CX
