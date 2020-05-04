@@ -6,10 +6,10 @@ Code SEGMENT
     
 start:
     jmp initialization
-    tempH DD ?
+    tempH        DD ?
     installation DW 666
-    tempReg DB ?
-    tempBReg DW ?
+    tempReg      DB ?
+    tempBReg     DW ?
     
 resident proc near
     push AX
@@ -175,7 +175,7 @@ uninstallation:
     int 21h
     
     
-installation_message DB 'Voila! We are ready.', '$'
+installation_message   DB 'Voila! We are ready.', '$'
 uninstallation_message DB 'Voila! Thanks for usage!', '$'
     
 Code ENDS
