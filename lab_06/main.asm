@@ -2,7 +2,7 @@
 
 Code SEGMENT
     assume CS: Code, DS: Code
-    org 100h ; PSP?
+    org 100h ; PSP
     
 start:
     jmp initialization
@@ -24,7 +24,7 @@ resident proc near
     
     mov AX, 0B800h
     mov ES, AX
-    mov DI, 300
+    mov DI, 310
     
     mov ah, 1
     int 16h
@@ -155,7 +155,7 @@ uninstallation:
     push ES
     push DS
     
-    mov dx, word ptr ES:tempH
+    mov DX, word ptr ES:tempH
     mov DS, word ptr ES: tempH + 2
     mov AL, 09h
     mov AH, 25h
@@ -164,7 +164,7 @@ uninstallation:
     pop DS
     pop ES
     
-    mov AH, 49h
+    mov AH, 49h ; Освобождение блока памяти
     int 21h
     
     mov AH, 09h
