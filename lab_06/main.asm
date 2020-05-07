@@ -26,13 +26,13 @@ resident proc near
     mov ES, AX
     mov DI, 310
     
-    mov ah, 1
+    mov AH, 1
     int 16h
     
-    cmp al, 'z'
+    cmp AL, 'z'
     je printData
     
-    cmp al, 'x'
+    cmp AL, 'x'
     je printYear
     
     jmp return
