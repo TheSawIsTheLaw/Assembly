@@ -1,10 +1,7 @@
 ﻿#include <iostream>
 
 extern "C" {
-	void testAsm(); // подключение в код на Си/Си++ функции
-	// на другом языке программирования,
-	// выполненной в соответствии с соглашениями
-	// о вызовах Си
+	void cpy();
 }
 
 int main() {
@@ -21,6 +18,23 @@ int main() {
 		dec EAX
 		mov result, EAX
 	}
-	std::cout << result;
+	std::cout<< result;
+
+	char copied[666];
+
+	__asm {
+		lea EAX, [testString]
+		push EAX
+		lea EAX, [copied]
+		push EAX
+	}
+	cpy();
+	__asm {
+		pop EAX
+		pop EAX
+	}
+
+	std::cout << copied;
+
 	return 0;
 }

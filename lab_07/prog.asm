@@ -2,8 +2,7 @@
 .MODEL FLAT, C
 .STACK
 .CODE
-	testAsm PROC
-	mov eax, 7
+	cpy PROC
 	ret
-testAsm ENDP
-END
+cpy ENDP
+END
