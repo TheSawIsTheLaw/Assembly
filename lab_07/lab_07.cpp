@@ -24,9 +24,8 @@ int main() {
 	size_t saved;
 
 	cpy(copied, testString, result);
-	__asm mov saved, ECX
 
-	std::cout << saved;
+	std::cout << copied;
 
 	return 0;
 }
