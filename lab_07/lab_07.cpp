@@ -5,25 +5,29 @@ extern "C" {
 }
 
 int main() {
-	char testString[] = "Wow, such a program\0";
+	char testString[] = "Wow, such a programm";
+	std::cout << testString << std::endl;
 	size_t result = 0;
 
 	__asm {
 		mov ECX, -1
 		mov AL, 0
-		lea DI, [testString]
+		lea EDI, [testString]
 		repne scasb
-		mov EAX, -1
-		sub EAX, ECX
-		dec EAX
-		mov result, EAX
+		not ECX
+		dec ECX
+		mov result, ECX
 	}
-	std::cout<< result;
+	std::cout<< result<< "\n";
 
-	char copied[666];
+	char copied[666] = { '\0' };
 	size_t saved;
 
 	cpy(copied, testString, result);
+
+	std::cout << copied << "\n";
+
+	cpy(copied + 4, copied, 6);
 
 	std::cout << copied;
 

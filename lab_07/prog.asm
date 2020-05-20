@@ -4,19 +4,39 @@
 
 .CODE
 cpy PROC to:dword, from:dword, len:dword
+	pushf
 	mov ECX, len
 
-	lea EAX, [to]
-	add EAX, len
-	cmp EAX, [from]
-	jae overlay; Перейти, если больше или равно
 	mov ESI, from
 	mov EDI, to
-	REP movsb
-	ret
+
+	cmp ESI, EDI
+	je quit
+
+	mov EAX, ESI
+	add EAX, len
+
+	cmp EAX, EDI
+	jg overlay
+
+	rep movsb
+
+	jmp quit
 
 overlay:
-; тут просто меняем флаг DF и старт прохода на + len
+	add ESI, len
+	dec ESI
+	add EDI, len
+	dec EDI
+
+	std
+
+	rep movsb
+
+	jmp quit
+
+quit:
+	popf
 	ret
 
 cpy ENDP
