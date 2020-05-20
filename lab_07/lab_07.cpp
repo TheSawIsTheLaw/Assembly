@@ -21,12 +21,10 @@ int main() {
 	std::cout<< result;
 
 	char copied[666];
-	int saved;
+	size_t saved;
 
 	cpy(copied, testString, result);
-	__asm {
-		mov saved, EAX
-	}
+	__asm mov saved, ECX
 
 	std::cout << saved;
 
