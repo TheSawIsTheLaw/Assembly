@@ -23,7 +23,6 @@ float divFloat(const float fNum, const float sNum) {
 }
 
 int reallyBadCalculator(const float fNum, const float sNum, const char oper, float &result) {
-	float result = 0;
 	if (oper == '+')
 		result = addFloat(fNum, sNum);
 	else if (oper == '-')
