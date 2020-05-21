@@ -1,21 +1,41 @@
 ﻿#include <iostream>
 
+#define BAD_OPERATION -1
+
+#define SUCCESS 0
+
 using namespace std;
 
-float addFloat() {
-
+float addFloat(const float fNum, const float sNum) {
+	return 0;
 }
 
-float difFloat() {
-
+float difFloat(const float fNum, const float sNum) {
+	return 0;
 }
 
-float mulFloat() {
-
+float mulFloat(const float fNum, const float sNum) {
+	return 0;
 }
 
-float divFloat() {
+float divFloat(const float fNum, const float sNum) {
+	return 0;
+}
 
+int reallyBadCalculator(const float fNum, const float sNum, const char oper, float &result) {
+	float result = 0;
+	if (oper == '+')
+		result = addFloat(fNum, sNum);
+	else if (oper == '-')
+		result = difFloat(fNum, sNum);
+	else if (oper == '*')
+		result = mulFloat(fNum, sNum);
+	else if (oper == '/')
+		result = divFloat(fNum, sNum);
+	else
+		return BAD_OPERATION;
+
+	return SUCCESS;
 }
 
 int main()
@@ -25,5 +45,12 @@ int main()
 	char oper = '+';
 
 	cin >> firstNum >> oper >> secondNum;
-	if (oper == '+')
+	float result = 0;
+
+	int check = reallyBadCalculator(firstNum, secondNum, oper, result);
+
+	if (!check)
+		cout << "Result of this operation is: " << result;
+
+	return check;
 }
