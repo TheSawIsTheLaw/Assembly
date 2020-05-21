@@ -93,7 +93,7 @@ int goToAriphmetics(float &result) {
 	return check;
 }
 
-void goToSinCos(float& result, int choice) {
+void goToSinCos(float& result, const int choice) {
 	cout << "Angle: ";
 	float angle = 0;
 	cin >> angle;
