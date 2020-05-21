@@ -29,7 +29,14 @@ float difFloat(const float fNum, const float sNum) {
 }
 
 float mulFloat(const float fNum, const float sNum) {
-	return 0;
+	float result = 0;
+	__asm {
+		fld fNum
+		fld sNum
+		fmul
+		fstp result
+	}
+	return result;
 }
 
 float divFloat(const float fNum, const float sNum) {
