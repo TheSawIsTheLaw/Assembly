@@ -18,7 +18,14 @@ float addFloat(const float fNum, const float sNum) {
 }
 
 float difFloat(const float fNum, const float sNum) {
-	return 0;
+	float result = 0;
+	__asm {
+		fld fNum
+		fld sNum
+		fsub
+		fstp result
+	}
+	return result;
 }
 
 float mulFloat(const float fNum, const float sNum) {
