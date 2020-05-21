@@ -40,7 +40,14 @@ float mulFloat(const float fNum, const float sNum) {
 }
 
 float divFloat(const float fNum, const float sNum) {
-	return 0;
+	float result = 0;
+	__asm {
+		fld fNum
+		fld sNum
+		fdiv
+		fstp result
+	}
+	return result;
 }
 
 int reallyBadCalculator(const float fNum, const float sNum, const char oper, float &result) {
