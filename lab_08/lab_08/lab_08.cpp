@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 
 #define BAD_OPERATION -1
+#define BAD_CHOICE -2
 
 #define SUCCESS 0
 
@@ -126,8 +127,10 @@ int main()
 	else if (choice == 3) {
 		check = goToAriphmetics(result);
 	}
+	else
+		check = BAD_CHOICE;
 
-	if (!check)
+	if (!check && choice != 4)
 		cout << "Result of this operation is: " << result;
 
 	return check;
