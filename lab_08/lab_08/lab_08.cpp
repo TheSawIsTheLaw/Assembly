@@ -6,6 +6,26 @@
 
 using namespace std;
 
+float sinFloat(const float angle) {
+	float result = 0;
+	__asm {
+		fld angle
+		fsin
+		fstp result
+	}
+	return result;
+}
+
+float cosFloat(const float angle) {
+	float result = 0;
+	__asm {
+		fld angle
+		fcos
+		fstp result
+	}
+	return result;
+}
+
 float addFloat(const float fNum, const float sNum) {
 	float result = 0;
 	__asm {
@@ -67,14 +87,40 @@ int reallyBadCalculator(const float fNum, const float sNum, const char oper, flo
 
 int main()
 {
-	cout << "Set your epxr: ";
-	float firstNum = 0, secondNum = 0;
-	char oper = '+';
+	cout << "What do you want?\n" <<
+		"1. Get sinus!\n2. Get cosinus!\n" <<
+		"3. Get result of an Arithmetic operation!\n" <<
+		"4. Оставь меня, старушка, я в печали...\n\nYour choice: ";
 
-	cin >> firstNum >> oper >> secondNum;
+	int choice = 0;
+	cin >> choice;
+
 	float result = 0;
 
-	int check = reallyBadCalculator(firstNum, secondNum, oper, result);
+	int check = SUCCESS;
+	if (choice == 1) {
+		cout << "Angle: ";
+		float angle = 0;
+		cin >> angle;
+
+		result = sinFloat(angle);
+	}
+	if (choice == 2) {
+		cout << "Angle: ";
+		float angle = 0;
+		cin >> angle;
+
+		result = cosFloat(angle);
+	}
+	else if (choice == 3) {
+		cout << "Set your epxr: ";
+		float firstNum = 0, secondNum = 0;
+		char oper = '+';
+
+		cin >> firstNum >> oper >> secondNum;
+
+		check = reallyBadCalculator(firstNum, secondNum, oper, result);
+		}
 
 	if (!check)
 		cout << "Result of this operation is: " << result;
