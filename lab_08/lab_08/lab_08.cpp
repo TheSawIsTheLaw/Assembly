@@ -31,8 +31,7 @@ float addFloat(const float fNum, const float sNum) {
 	float result = 0;
 	__asm {
 		fld fNum
-		fld sNum
-		fadd
+		fadd sNum
 		fstp result
 	}
 	return result;
@@ -42,8 +41,7 @@ float difFloat(const float fNum, const float sNum) {
 	float result = 0;
 	__asm {
 		fld fNum
-		fld sNum
-		fsub
+		fsub sNum
 		fstp result
 	}
 	return result;
@@ -53,8 +51,7 @@ float mulFloat(const float fNum, const float sNum) {
 	float result = 0;
 	__asm {
 		fld fNum
-		fld sNum
-		fmul
+		fmul sNum
 		fstp result
 	}
 	return result;
@@ -64,8 +61,7 @@ float divFloat(const float fNum, const float sNum) {
 	float result = 0;
 	__asm {
 		fld fNum
-		fld sNum
-		fdiv
+		fdiv sNum
 		fstp result
 	}
 	return result;
