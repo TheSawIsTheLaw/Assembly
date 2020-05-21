@@ -10,6 +10,7 @@ int main() {
 	size_t result = 0;
 
 	__asm {
+		push ECX
 		mov ECX, -1
 		mov AL, 0
 		lea EDI, [testString]
@@ -17,19 +18,17 @@ int main() {
 		not ECX
 		dec ECX
 		mov result, ECX
+		pop ECX
 	}
 	std::cout<< result<< "\n";
 
 	char copied[666] = { '\0' };
-	size_t saved;
 
 	cpy(copied, testString, result);
 
 	std::cout << copied << "\n";
 
-	__asm mov saved, EAX
 	cpy(copied + 4, copied, 6);
-	__asm mov EAX, saved
 
 	std::cout << copied;
 
