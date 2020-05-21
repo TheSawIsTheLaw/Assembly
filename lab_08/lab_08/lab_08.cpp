@@ -117,12 +117,12 @@ int main()
 	float result = 0;
 
 	int check = SUCCESS;
-	if (choice == 1 || choice == 2) {
+	if (choice == 1 || choice == 2)
 		goToSinCos(result, choice);
-	}
-	else if (choice == 3) {
+	else if (choice == 3)
 		check = goToAriphmetics(result);
-	}
+	else if (choice == 4)
+		check = SUCCESS;
 	else
 		check = BAD_CHOICE;
 
