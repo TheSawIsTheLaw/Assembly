@@ -85,6 +85,28 @@ int reallyBadCalculator(const float fNum, const float sNum, const char oper, flo
 	return SUCCESS;
 }
 
+int goToAriphmetics(float &result) {
+	cout << "Set your epxr: ";
+	float firstNum = 0, secondNum = 0;
+	char oper = '+';
+
+	cin >> firstNum >> oper >> secondNum;
+
+	int check = reallyBadCalculator(firstNum, secondNum, oper, result);
+	return check;
+}
+
+void goToSinCos(float& result, int choice) {
+	cout << "Angle: ";
+	float angle = 0;
+	cin >> angle;
+
+	if (choice == 1)
+		result = sinFloat(angle);
+	else
+		result = cosFloat(angle);
+}
+
 int main()
 {
 	cout << "What do you want?\n" <<
@@ -98,29 +120,12 @@ int main()
 	float result = 0;
 
 	int check = SUCCESS;
-	if (choice == 1) {
-		cout << "Angle: ";
-		float angle = 0;
-		cin >> angle;
-
-		result = sinFloat(angle);
-	}
-	if (choice == 2) {
-		cout << "Angle: ";
-		float angle = 0;
-		cin >> angle;
-
-		result = cosFloat(angle);
+	if (choice == 1 || choice == 2) {
+		goToSinCos(result, choice);
 	}
 	else if (choice == 3) {
-		cout << "Set your epxr: ";
-		float firstNum = 0, secondNum = 0;
-		char oper = '+';
-
-		cin >> firstNum >> oper >> secondNum;
-
-		check = reallyBadCalculator(firstNum, secondNum, oper, result);
-		}
+		check = goToAriphmetics(result);
+	}
 
 	if (!check)
 		cout << "Result of this operation is: " << result;
