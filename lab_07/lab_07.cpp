@@ -27,7 +27,9 @@ int main() {
 
 	std::cout << copied << "\n";
 
+	__asm mov saved, EAX
 	cpy(copied + 4, copied, 6);
+	__asm mov EAX, saved
 
 	std::cout << copied;
 
