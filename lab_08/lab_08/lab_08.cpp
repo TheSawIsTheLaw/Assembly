@@ -7,7 +7,14 @@
 using namespace std;
 
 float addFloat(const float fNum, const float sNum) {
-	return 0;
+	float result = 0;
+	__asm {
+		fld fNum
+		fld sNum
+		fadd
+		fstp result
+	}
+	return result;
 }
 
 float difFloat(const float fNum, const float sNum) {
