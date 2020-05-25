@@ -47,9 +47,7 @@ int main(void) {
 
     mark += firstQuestion();
 
-    printf("%d", mark);
     mark += secondQuestion();
-    printf("%d", mark);
 
     if (mark == ITSAHUMAN)
         printf("\nOh, hi, Mark!");
