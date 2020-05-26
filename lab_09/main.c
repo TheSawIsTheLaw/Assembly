@@ -4,6 +4,10 @@
 #define NO 0
 
 #define ITSAHUMAN 0
+#define SATAN 666
+#define NOTSATAN -666
+#define LEET 1337
+#define AZINO 777
 
 #define SUCCESS 0
 
@@ -40,6 +44,16 @@ int secondQuestion() {
     return answ;
 }
 
+int thirdQuestion() {
+    printf("\nThird question is: Can you kill a human? Answer: ");
+    int answ = NO;
+    int answs[] = { YES, NO, NO, NOTSATAN, YES, NO, SATAN, YES, LEET, AZINO};
+    int answsSec[] = { SATAN, SATAN, NO, NOTSATAN, SATAN, NO, SATAN, YES, LEET, AZINO};
+
+    scanf("%d", &answ);
+    return answsSec[1] + answs[3] - answ;
+}
+
 int main(void) {
     printf("You won't pass, machine!");
 
@@ -48,6 +62,8 @@ int main(void) {
     mark += firstQuestion();
 
     mark += secondQuestion();
+
+    mark -= thirdQuestion() + 1;
 
     if (mark == ITSAHUMAN)
         printf("\nOh, hi, Mark!");
