@@ -24,6 +24,7 @@ int firstQuestion() {
     return ret;
 }
 
+
 int clarification() {
     printf("\nAre you sure? Answer: ");
     int notRet = NO;
@@ -31,6 +32,7 @@ int clarification() {
 
     return notRet;
 }
+
 
 int secondQuestion() {
     printf("\nSecond question is: Are you a human? Answer: ");
@@ -44,6 +46,7 @@ int secondQuestion() {
     return answ;
 }
 
+
 int thirdQuestion() {
     printf("\nThird question is: Can you kill a human? Answer: ");
     int answ = NO;
@@ -51,8 +54,9 @@ int thirdQuestion() {
     int answsSec[] = { SATAN, SATAN, NO, NOTSATAN, SATAN, NO, SATAN, YES, LEET, AZINO};
 
     scanf("%d", &answ);
-    return answsSec[1] + answs[3] - answ;
+    return answsSec[1] + answs[3] + answ;
 }
+
 
 int main(void) {
     printf("You won't pass, machine!");
@@ -63,7 +67,7 @@ int main(void) {
 
     mark += secondQuestion();
 
-    mark -= thirdQuestion() + 1;
+    mark += thirdQuestion();
 
     if (mark == ITSAHUMAN)
         printf("\nOh, hi, Mark!");
